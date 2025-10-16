@@ -1,8 +1,22 @@
-# Load the mtcars dataset
-data(mtcars)
+house_data <- read.csv("/content/sample_data/california_housing_train.csv")
+head(house_data)
+names(house_data)
 
-# Perform Pearson correlation test between hp and mpg
-correlation_result <- cor.test(mtcars$hp, mtcars$mpg, method = "pearson")
+# Fit linear regression model
+model <- lm(median_house_value ~ median_income, data = house_data)
 
-# Print the result
-print(correlation_result)
+#Slope and intercept
+coefficients <- coef(model)
+intercept <- coefficients[1]
+slope <- coefficients[2]
+
+cat("Intercept:", intercept, "\n")
+cat("Slope:", slope, "\n")
+#Plot scatter plot
+plot(house_data$median_income, house_data$median_house_value,
+     main = "House Price vs Median Income",
+     xlab = "Median Income",
+     ylab = "Median House Value",
+     pch = 19, col = "blue")
+
+abline(model, col = "red", lwd = 2)
